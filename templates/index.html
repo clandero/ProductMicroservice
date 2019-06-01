@@ -1,0 +1,39 @@
+<html>
+<head>
+  	<title>Pet Store Products</title>
+  	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  	<style type="text/css">
+  		body {
+	  		font-family: "helvetica", sans-serif;
+			text-align: center;
+		}
+
+  	</style>
+</head>
+<body>
+	<h1>Pet Store Products</h1>
+  	<table class="table">
+	  	<thead>
+	  		<tr>
+	  			<th>ID</th>
+	  			<th>Name</th>
+	  			<th>Category</th>
+	  			<th>Price</th>
+	  			<th>Stock</th>
+	  		</tr>
+	  	</thead>
+	  	<tbody>
+	  		{% for i in products %}
+	  			<tr>
+	  				<td>{{ i['id'] }}</td>
+		  			<td>{{ i['name'] }}</td>
+		  			<td>{{ i['category'] }}</td>
+		  			<td>{{ i['price'] }}</td>
+		  			<td>{{ i['stock'] }}</td>
+		  		</tr>			
+	  		{% endfor %}
+	  	</tbody>	
+  	</table>
+	
+</body>
+</html>
