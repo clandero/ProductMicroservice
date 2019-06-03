@@ -11,15 +11,15 @@ app.debug = True
 
 class Product(ndb.Model):
 	id = ndb.IntegerProperty()
-	name = ndb.StringProperty()
-	category = ndb.StringProperty()
+	breed = ndb.StringProperty()
+	specie = ndb.StringProperty()
 	price = ndb.FloatProperty()
 	stock = ndb.IntegerProperty()
 
 class ProductSerializer(Schema):
 	class Meta:
 		fields = (
-			"id","name","category","price","stock"
+			"id","breed","specie","price","stock"
 		)
 
 product_schema = ProductSerializer()
@@ -32,8 +32,8 @@ def create_product():
 		abort(400,"json only please")
 	product = Product(
 		id=request.json['id'],
-		name=request.json['name'],
-		category=request.json['category'],
+		breed=request.json['breed'],
+		specie=request.json['specie'],
 		price=request.json['price'],
 		stock=request.json['stock'])
 	product.put()
@@ -47,8 +47,8 @@ def fetch_products():
 @app.route('/products/get/id/<int:productid>')
 def get_product_by_id(productid):
 	# productid = int(request.args.get('id'))
-	if productid == None:
-		return abort(400,"please provide a product id")
+	#if productid == None:
+	#	return abort(400,"please provide a product id")
 	try:
 		query = Product.query(Product.id == productid)
 		post = query.get()
@@ -58,13 +58,13 @@ def get_product_by_id(productid):
 	except Exception, e:
 		return abort(500,e)
 
-@app.route('/products/get/name/<string:productname>')
-def get_product_by_name(productname):
+@app.route('/products/get/breed/<string:productbreed>')# breed
+def get_product_by_breed(productbreed):
 	# productid = int(request.args.get('id'))
-	if productname == None:
-		return abort(400,"please provide a product name")
+	#if productbreed == None:
+	#	return abort(400,"please provide a product breed")
 	try:
-		query = Product.query(Product.name == productname)
+		query = Product.query(Product.breed == productbreed)
 		post = query.get()
 		if post == None:
 			return not_found("Product was not found")
@@ -72,13 +72,13 @@ def get_product_by_name(productname):
 	except Exception, e:
 		return abort(500,e)
 
-@app.route('/products/get/category/<string:productcategory>')
-def get_product_by_category(productcategory):
+@app.route('/products/get/specie/<string:productspecie>')# specie
+def get_product_by_specie(productspecie):
 	# productid = int(request.args.get('id'))
-	if productcategory == None:
-		return abort(400,"please provide a product name")
+	#if productspecie == None:
+	#	return abort(400,"please provide a product breed")
 	try:
-		query = Product.query(Product.category == productcategory)
+		query = Product.query(Product.specie == productspecie)
 		post = query.get()
 		if post == None:
 			return not_found("Product was not found")
@@ -107,10 +107,10 @@ def update_product():
 			if value == None:
 				return not_found("Product was not found")
 			json = request.json or {}
-			if 'name' in json:
-				value.author = json['name']
-			if 'category' in json:
-				value.category = json['category']
+			if 'breed' in json:
+				value.author = json['breed']
+			if 'specie' in json:
+				value.specie = json['specie']
 			if 'price' in json:
 				value.price = json['price']
 			if 'stock' in json:
