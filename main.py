@@ -65,7 +65,7 @@ def get_product_by_breed(productbreed):
 	#	return abort(400,"please provide a product breed")
 	try:
 		query = Product.query(Product.breed == productbreed)
-		post = query.get()
+		post = query.fetch()
 		if post == None:
 			return not_found("Product was not found")
 		return jsonify(product_schema.dump(post).data)
@@ -79,10 +79,12 @@ def get_product_by_specie(productspecie):
 	#	return abort(400,"please provide a product breed")
 	try:
 		query = Product.query(Product.specie == productspecie)
-		post = query.get()
+		post = query.fetch()
+		#print(post,file=sys.stdout)
 		if post == None:
 			return not_found("Product was not found")
-		return jsonify(product_schema.dump(post).data)
+		return jsonify({ productspecie: products_schema.dump(post).data})
+#		return jsonify(product_schema.dump(post).data)
 	except Exception, e:
 		return abort(500,e)
 
