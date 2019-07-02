@@ -15,11 +15,12 @@ class Product(ndb.Model):
 	specie = ndb.StringProperty()
 	price = ndb.FloatProperty()
 	stock = ndb.IntegerProperty()
+	image_url = ndb.StringProperty()
 
 class ProductSerializer(Schema):
 	class Meta:
 		fields = (
-			"id","breed","specie","price","stock"
+			"id","breed","specie","price","stock","image_url"
 		)
 
 product_schema = ProductSerializer()
@@ -35,7 +36,8 @@ def create_product():
 		breed=request.json['breed'],
 		specie=request.json['specie'],
 		price=request.json['price'],
-		stock=request.json['stock'])
+		stock=request.json['stock'],
+		image_url=request.json['image_url'])
 	product.put()
 	return jsonify(product_schema.dump(product).data)
 
@@ -65,7 +67,7 @@ def get_product_by_breed(productbreed):
 	#	return abort(400,"please provide a product breed")
 	try:
 		query = Product.query(Product.breed == productbreed)
-		post = query.fetch()
+		post = query.get()
 		if post == None:
 			return not_found("Product was not found")
 		return jsonify(product_schema.dump(post).data)
@@ -117,6 +119,8 @@ def update_product():
 				value.price = json['price']
 			if 'stock' in json:
 				value.stock = json['stock']
+			if 'image_url' in json:
+				value.stock = json['image_url']
 			value.put()
 			return jsonify(product_schema.dump(value).data)
 	except Exception, e:

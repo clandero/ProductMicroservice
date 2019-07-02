@@ -36,3 +36,13 @@ curl -X POST -H 'Content-Type: application/json' -d \
   "stock" : 6
 }' https://practiceiv-on-gcloud.appspot.com/products/create
 
+curl -X POST -H 'Content-Type: application/json' -d \
+'{
+  "id" : 5,
+  "breed" : "ForrestCat",
+  "specie" : "Cats",
+  "price" : 21000.00,
+  "stock" : 5
+}' https://practiceiv-on-gcloud.appspot.com/products/create
+
+
